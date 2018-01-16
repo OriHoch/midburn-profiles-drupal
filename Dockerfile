@@ -8,11 +8,10 @@ RUN apt-get update && apt-get install -y curl &&\
 
 COPY secret-k8s-ops.json .
 
-RUN gcloud auth activate-service-account --key-file=secret-k8s-ops.json &&\
-    gcloud config set project midbarrn &&\
-    gsutil -m cp -r gs://midburn-k8s-backups/profiles-etc-2018-01-16/ /etc/ &&\
-    gsutil -m cp -r gs://midburn-k8s-backups/profiles-home-bitnami-2018-01-16/ /home/bitnami/ &&\
-    gsutil -m cp -r gs://midburn-k8s-backups/profiles-opt-bitnami-2018-01-16/ /opt/bitnami/ &&\
+RUN gcloud auth activate-service-account --key-file=secret-k8s-ops.json;\
+    gcloud config set project midbarrn;\
+    mkdir -p /home/bitnami; mkdir -p /opt/bitnami;\
+    gsutil -qm cp -cr gs://midburn-k8s-backups/profiles-etc-2018-01-16/ /etc/;\
+    gsutil -qm cp -cr gs://midburn-k8s-backups/profiles-home-bitnami-2018-01-16/ /home/bitnami/;\
+    gsutil -qm cp -cr gs://midburn-k8s-backups/profiles-opt-bitnami-2018-01-16/ /opt/bitnami/;\
     rm -f secret-k8s-ops.json
-
-
