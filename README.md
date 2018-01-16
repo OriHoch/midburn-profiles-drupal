@@ -1,5 +1,10 @@
 # midburn-profiles-drupal
 
+Containerized Midburn Profiles Drupal App
+
+* **Work In Progress**
+* **Code is still not open source, requires permissions to download code and data dumps from google storage**
+
 
 ## Prerequisites
 
