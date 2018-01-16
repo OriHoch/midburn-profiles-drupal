@@ -2,9 +2,12 @@
 
 Containerized Midburn Profiles Drupal App
 
+## Warnings
+
+All warnings will hopefully be removed soon, but for now - 
 * **Work In Progress**
 * **Code is still not open source, requires permissions to download code and data dumps from google storage**
-
+* **Running the environment locally requires a strong PC, enough RAM and ~10GB of available storage (preferably SSD)**
 
 ## Prerequisites
 
