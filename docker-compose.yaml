@@ -3,7 +3,8 @@ version: '2'
 services:
 
   db:
-    image: mysql:5.6
+    # production dump Jan 16, 2018
+    image: gcr.io/midbarrn/midburn-profiles-drupal-db-latest@sha256:5c4a1a8d5ff867b1ed30e150de5f5834f622911f2ee31bf4f14a225c5d882b23
     ports:
     - 3306:3306
     environment:
@@ -19,4 +20,10 @@ services:
   drupal:
     depends_on:
     - db
-    image: gcr.io/midbarrn/midburn-profiles-drupal-latest:latest
+    build: .
+    image: midburn-profiles-drupal
+    ports:
+    - 80:80
+    - 443:443
+    # production dump Jan 16, 2018
+    # image: gcr.io/midbarrn/midburn-profiles-drupal-latest@sha256:2e7b073da40bfca3205c0fd7a2f1f378644eeb6da683f267b8fd4f7ab91bb168
