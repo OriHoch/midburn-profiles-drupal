@@ -71,7 +71,13 @@ docker-compose run drupal
 
 ## Building an updated drupal container image
 
-* Modify the IMAGE_TAG to identify your image (this can be git commit or tag)
+The drupal image is based on dumps of data from the old drupal server which are downloaded to create the image.
+
+If you made changes to the `Dockerfile` or other related files, you should rebuild the image.
+
+The build takes a long time and downloads GBs of data, so we use Google Container Builder to build the images.
+
+Modify the IMAGE_TAG in the following snippet to identify your image (this can be git commit or tag when run from automation tools)
 
 ```
 IMAGE_TAG="testing123"
