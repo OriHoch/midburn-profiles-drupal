@@ -1,0 +1,11 @@
+language: bash
+sudo: required
+env:
+  matrix:
+  # - DEPLOY_ENVIRONMENT=staging DEPLOY_BRANCH=master
+  # - DEPLOY_ENVIRONMENT=production DEPLOY_TAGS=true
+  - DEPLOY_ENVIRONMENT=ori DEPLOY_BRANCH=master OPS_REPO_BRANCH=midburn-profiles-aka-drupal-infra
+services:
+- docker
+script:
+- continuous_deployment.sh
