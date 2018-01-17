@@ -2,17 +2,14 @@
 
 Containerized Midburn Profiles Drupal App
 
-## Warnings
+The code and related database data are private and require permissions to download the docker images from private google docker repository.
 
-All warnings will hopefully be removed soon, but for now - 
-* **Work In Progress**
-* **Code is still not open source, requires permissions to download code and data dumps from google storage**
-* **Running the environment locally requires a strong PC, enough RAM and ~10GB of available storage (preferably SSD)**
 
 ## Prerequisites
 
 * Install [Docker](https://docs.docker.com/engine/installation/)
 * Install [Docker Compose](https://docs.docker.com/compose/install/)
+* To run locally - enough RAM and ~10GB of available storage (preferably SSD)
 
 
 ## Pull the docker images
@@ -44,23 +41,11 @@ DB management web ui is available at http://localhost:8080/login
 
 To rebuild and restart (if you made changes) just run the up command again
 
-To remove remove the environment and release all resources
+When done, remove the environment and delete all data
 
 ```
 docker-compose down -v
 ```
-
-
-## Building updated images
-
-The images are based on dumps of data from the old drupal server which are downloaded in the `Dockerfile`.
-
-If you made changes to the `Dockerfile` or `db/Dockerfile` or other related files, you should rebuild the image/s.
-
-The build takes a long time and downloads GBs of data, so we use Google Container Builder.
-
-* Drupal - `./cloudbuild.sh gcr.io/midbarrn/midburn-profiles-drupal:_ midbarrn midburn-profiles-drupal .`
-* DB - `./cloudbuild.sh gcr.io/midbarrn/midburn-profiles-drupal-db:_ midbarrn midburn-profiles-drupal-db db`
 
 
 ## Updating the DB image

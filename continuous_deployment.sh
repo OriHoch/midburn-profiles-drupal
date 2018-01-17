@@ -5,10 +5,14 @@ if \
 then
     RES=0
     cd /ops
+    HELM_UPDATE_COMMIT_MESSAGE="update midburn profiles drupal images --no-deploy"
     ! ./helm_update_values.sh "${B64_UPDATE_VALUES}" "${HELM_UPDATE_COMMIT_MESSAGE}" "${K8S_OPS_GITHUB_REPO_TOKEN}" \
                               "${OPS_REPO_SLUG}" "${OPS_REPO_BRANCH}" && RES=1
 
     cd /pwd
+    ls -lah
+    echo "IMAGE_TAG=${IMAGE_TAG}"
+    echo "DB_IMAGE_TAG=${DB_IMAGE_TAG}"
     ! ./cloudbuild.sh ${IMAGE_TAG} midbarrn midburn-profiles-drupal . && RES=1
     ! ./cloudbuild.sh ${DB_IMAGE_TAG} midbarrn midburn-profiles-drupal-db db && RES=1
     exit $RES
@@ -25,14 +29,12 @@ then
     echo "IMAGE_TAG=${IMAGE_TAG}"
     echo "DB_IMAGE_TAG=${DB_IMAGE_TAG}"
     B64_UPDATE_VALUES=`echo '{"profiles":{"image":"'${IMAGE_TAG}'", "dbImage":"'${DB_IMAGE_TAG}'"}}' | base64 -w0`
-    HELM_UPDATE_COMMIT_MESSAGE="update midburn profiles drupal images"
     wget https://raw.githubusercontent.com/OriHoch/sk8s-ops/master/run_docker_ops.sh
-    chmod +x run_docker_ops.sh bin/continuous_deployment.sh
+    chmod +x run_docker_ops.sh
     ! ./run_docker_ops.sh "${DEPLOY_ENVIRONMENT}" "/pwd/continuous_deployment.sh" \
                           "orihoch/sk8s-ops" "${OPS_REPO_SLUG}" "${OPS_REPO_BRANCH}" "" "
                             -v `pwd`:/pwd
                             -e B64_UPDATE_VALUES=${B64_UPDATE_VALUES}
-                            -e HELM_UPDATE_COMMIT_MESSAGE=${HELM_UPDATE_COMMIT_MESSAGE}
                             -e K8S_OPS_GITHUB_REPO_TOKEN=${K8S_OPS_GITHUB_REPO_TOKEN}
                             -e OPS_REPO_SLUG=${OPS_REPO_SLUG}
                             -e OPS_REPO_BRANCH=${OPS_REPO_BRANCH}

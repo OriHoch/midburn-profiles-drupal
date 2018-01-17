@@ -1,3 +1,4 @@
 .idea
 secret*
 dump.sql
+run_docker_ops.sh
