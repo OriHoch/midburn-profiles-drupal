@@ -8,4 +8,4 @@ env:
 services:
 - docker
 script:
-- continuous_deployment.sh
+- ./continuous_deployment.sh
