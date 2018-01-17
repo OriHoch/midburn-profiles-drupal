@@ -10,7 +10,9 @@ COPY secret-k8s-ops.json .
 
 RUN gcloud auth activate-service-account --key-file=secret-k8s-ops.json;\
     gcloud config set project midbarrn;\
-    mkdir -p /var/lib/mysql;\
-    gsutil -qm cp -cUR 'gs://midburn-k8s-backups/profiles-db-production-mysqldump-2018-01-16/*' /var/lib/mysql/;\
-    chown -R mysql:mysql /var/lib/mysql;\
+    mkdir -p /profiles-db-datadir/mysql;\
+    gsutil -qm cp -cUR 'gs://midburn-k8s-backups/profiles-db-production-mysqldump-2018-01-16/*' /profiles-db-datadir/mysql/;\
+    chown -R mysql:mysql /profiles-db-datadir;\
     rm -f secret-k8s-ops.json
+
+CMD ["mysqld", "--datadir=/profiles-db-datadir/mysql"]
