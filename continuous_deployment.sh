@@ -14,7 +14,13 @@ then
     echo "IMAGE_TAG=${IMAGE_TAG}"
     echo "DB_IMAGE_TAG=${DB_IMAGE_TAG}"
     ! ./cloudbuild.sh ${IMAGE_TAG} midbarrn midburn-profiles-drupal . && RES=1
+    cp ./secret-k8s-ops.json db/
     ! ./cloudbuild.sh ${DB_IMAGE_TAG} midbarrn midburn-profiles-drupal-db db && RES=1
+    if [ "${RES}" == "0" ]; then
+        cd /ops
+        ! kubectl set image deployment/profiles-db "db=${DB_IMAGE_TAG}" && RES=1
+        ! kubectl set image deployment/profiles-drupal "drupal=${IMAGE_TAG}" && RES=1
+    fi
     exit $RES
 
 elif [ "${DEPLOY_ENVIRONMENT}" != "" ] && [ "${TRAVIS_PULL_REQUEST}" == "false" ] &&\
